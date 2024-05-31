@@ -13,20 +13,39 @@ class Person(Base):
     # Notice that each column is also a normal Python instance attribute.
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
+    favorit = relationship('Favorit')
 
-class Address(Base):
-    __tablename__ = 'address'
+class Character(Base):
+    __tablename__ = 'character'
     # Here we define columns for the table address.
     # Notice that each column is also a normal Python instance attribute.
     id = Column(Integer, primary_key=True)
-    street_name = Column(String(250))
-    street_number = Column(String(250))
-    post_code = Column(String(250), nullable=False)
+    name = Column(String(250))
+    gender = Column(String(250))
+    color_ojos = Column(String(250), nullable=False)
+    favorit = relationship('Favorit')
+
+class Planet(Base):
+    __tablename__ = 'planet'
+    # Here we define columns for the table address.
+    # Notice that each column is also a normal Python instance attribute.
+    id = Column(Integer, primary_key=True)
+    name = Column(String(250))
+    poblacion = Column(String(250))
+    clima = Column(String(250), nullable=False)
+    favorit = relationship('Favorit')
+
+class Favorit (Base): 
+    __tablename__ = 'favorit'
+    id = Column(Integer, primary_key=True)
     person_id = Column(Integer, ForeignKey('person.id'))
-    person = relationship(Person)
+    character_id = Column(Integer, ForeignKey('character.id'))
+    planet_id = Column(Integer, ForeignKey('planet.id'))
+
 
     def to_dict(self):
         return {}
 
 ## Draw from SQLAlchemy base
 render_er(Base, 'diagram.png')
+
